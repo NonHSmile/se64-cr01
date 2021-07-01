@@ -5,20 +5,25 @@ import './App.css';
  
 
 const App = () => {
-  const [message, setMessage] = useState("My message Han Wen");
+  const [courses, setCourses] = useState<any[]>([]);
 
   useEffect(() => {
     fetch ('http://localhost:3000/courses')
     .then(res => res.json())
-    .then(obj => {
-      setMessage(obj.message);
+    .then(courses => {
+      console.log(courses);
+      setCourses(courses);
     });
 
   },[]);
 
   return (
     <div className="App"> 
-      {message}
+      <ul>
+        {courses.map(item => (
+          <li key={item.id}>{item.number} - {item.title}</li>
+        ))}
+      </ul>
     </div>
   );
 } 
