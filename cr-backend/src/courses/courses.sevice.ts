@@ -2,6 +2,8 @@ import { Injectable } from "@nestjs/common";
 import Course from "./course.entity";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
+import { create } from "domain";
+import { CreateCourseDto } from "./dto/create-course.dto";
 
 @Injectable()
 export class CoursesService {
@@ -12,25 +14,10 @@ export class CoursesService {
 
   async findAll(): Promise<Course[]> {
     return this.coursesRepository.find();
-    
-    /*
-    return [ 
-      {
-        id: '100',
-        number: '01204111',
-        title: 'Computer and Programming'
-      },
-      {
-        id: '123',
-        number: '01223111',
-        title: 'Happy Smile'
-      },
-      {
-        id: '132',
-        number: '01204091',
-        title: 'Wang Han Wen'
-      }
-    ];
-    */
   }
+
+  async create(createCourseDto: CreateCourseDto) {
+    return this.coursesRepository.save(createCourseDto); 
+  }
+
 }
