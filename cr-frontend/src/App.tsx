@@ -4,6 +4,8 @@ import './App.css';
 import CourseItem from './components/CourseItem';
 import NewCourseForm from './components/newCourseForm'; 
 
+import CoursesService from './services/CoursesService';
+
 const App = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [formVisible, setFormVisible] = useState<boolean>(false);
@@ -13,10 +15,8 @@ const App = () => {
   }
 
   const fetchCourses = () => {
-    fetch ('http://localhost:3000/courses')
-    .then(res => res.json())
-    .then(courses =>  {
-      console.log(courses);
+    CoursesService.fetchCourses()
+    .then(courses => {
       setCourses(courses);
     });
   }
