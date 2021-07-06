@@ -30,8 +30,26 @@ export async function fetchReviews(courseID:string):Promise<Review[]>{
     return reviews;
 }
 
+async function createReview(newReview: Review, courseID: string):Promise<Review|null>{
+    const res = await fetch (`${baseUrl}/courses/${courseID}/reviews`,{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(newReview),
+        });
+    const savedNewReview:Review = await res.json();
+
+    if(savedNewReview.id !== undefined) {
+        return savedNewReview;
+    }
+    else{
+        return null;
+    }
+
+}
+
 export default{
     fetchCourses,
     createCourses,
     fetchReviews,
+    createReview,
 }; 

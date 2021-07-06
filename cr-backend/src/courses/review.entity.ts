@@ -1,5 +1,5 @@
 import { Entity , Column , ObjectIdColumn } from "typeorm";
-import { ObjectID , ObjectId } from "mongodb";
+import { ObjectID } from "mongodb";
 
 @Entity()
 export class Review {

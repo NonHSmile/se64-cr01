@@ -2,9 +2,11 @@ import { Injectable } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CreateCourseDto } from "./dto/create-course.dto";
+import { CreateReviewDto } from "./dto/create-review.dto";
 
 import Course from "./course.entity";
 import Review from "./review.entity";
+import { ObjectID } from "bson";
 
 @Injectable()
 export class CoursesService {
@@ -24,7 +26,11 @@ export class CoursesService {
   }
 
   async findAllReviews(courseID: string): Promise<Review[]>{
-    return this.reviewsRepository.find({where:{courseID:courseID}});
+    return this.reviewsRepository.find({where:{courseID: new ObjectID(courseID)}});
+  }
+
+  async createReview(createReviewDto: CreateReviewDto) {
+    return this.reviewsRepository.save(createReviewDto); 
   }
 
 }
