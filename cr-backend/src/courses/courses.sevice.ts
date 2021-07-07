@@ -6,7 +6,7 @@ import { CreateReviewDto } from "./dto/create-review.dto";
 
 import Course from "./course.entity";
 import Review from "./review.entity";
-import { ObjectID } from "bson";
+import { ObjectID } from "mongodb";
 
 @Injectable()
 export class CoursesService {
@@ -25,8 +25,8 @@ export class CoursesService {
     return this.coursesRepository.save(createCourseDto); 
   }
 
-  async findAllReviews(courseID: string): Promise<Review[]>{
-    return this.reviewsRepository.find({where:{courseID: new ObjectID(courseID)}});
+  async findAllReviews(courseID: ObjectID): Promise<Review[]>{
+    return this.reviewsRepository.find({where:{courseID: courseID}});
   }
 
   async createReview(createReviewDto: CreateReviewDto) {
