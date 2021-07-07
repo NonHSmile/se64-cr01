@@ -6,6 +6,8 @@ import NewCourseForm from './newCourseForm';
 
 import CoursesService from '../services/CoursesService';
 
+import { Redirect } from 'react-router';
+
 const CourseReview = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [formVisible, setFormVisible] = useState<boolean>(false);

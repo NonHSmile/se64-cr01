@@ -2,3 +2,8 @@
   margin: 10px;
 }
 
+.App nav li{
+  display: inline;
+  margin-right: 10px;
+}
+
