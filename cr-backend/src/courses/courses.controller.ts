@@ -1,4 +1,4 @@
-import { Controller, Get , Post ,Body, HttpException, HttpStatus, Param } from '@nestjs/common';
+import { Controller, Get , Post ,Body, HttpException, HttpStatus, Param, UseGuards } from '@nestjs/common';
 import { ObjectID } from 'mongodb';
 
 import { CoursesService } from './courses.sevice';
@@ -9,6 +9,7 @@ import { CreateReviewDto } from './dto/create-review.dto';
 
 import Course from "./course.entity";
 import Review from './review.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 
 
@@ -21,6 +22,7 @@ export class CoursesController {
     return this.coursesService.findAll();
   }
   
+  @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() createCourseDto: CreateCourseDto){
     return this.coursesService.create(createCourseDto);
