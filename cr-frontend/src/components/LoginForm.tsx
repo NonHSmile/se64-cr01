@@ -4,7 +4,11 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 import AuthService from "../services/AuthService";
 
-const LoginForm = () => {
+type LoginFormProps = {
+    loginCallBack?: () => void,
+};
+
+const LoginForm = (props: LoginFormProps) => {
     const [loginErrorMessage, setLoginErrorMessage] = useState('');
     const history = useHistory();
 
@@ -28,6 +32,9 @@ const LoginForm = () => {
                         setLoginErrorMessage('Login error : wrong username or password');
                     }else{
                         setLoginErrorMessage('');
+                        if(props.loginCallBack){
+                            props.loginCallBack();
+                        }
                         history.push("/");
                     }
                     actions.setSubmitting(false);
