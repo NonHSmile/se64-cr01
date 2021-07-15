@@ -1,7 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
+import { useHistory } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
+import AuthService from "../services/AuthService";
+
 const LoginForm = () => {
+    const [loginErrorMessage, setLoginErrorMessage] = useState('');
+    const history = useHistory();
+
     return (
         <div className="LoginForm">
             <Formik
@@ -16,13 +22,22 @@ const LoginForm = () => {
                     }
                     return errors;
                 }}
-                onSubmit={(values, actions) => {
-                    console.log(values);
+                onSubmit={async (values, actions) => {
+                    const result = await AuthService.loginUser(values.login, values.password);
+                    if(! result){
+                        setLoginErrorMessage('Login error : wrong username or password');
+                    }else{
+                        setLoginErrorMessage('');
+                        history.push("/");
+                    }
                     actions.setSubmitting(false);
                 }}
             >
                 {( {isSubmitting }) => (
                     <Form>
+                        { loginErrorMessage && (
+                            <div>{loginErrorMessage}</div>
+                        )}
                         Login:
                         <Field type="input" name="login"/>
                         <ErrorMessage name="login" component="div" />
